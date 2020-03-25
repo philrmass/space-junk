@@ -1,0 +1,19 @@
+{
+  "name": "space-junk",
+  "version": "0.1.0",
+  "description": "A video game coronavirus project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philrmass/space-junk.git"
+  },
+  "author": "Phil Mass, Everett Mass & Henry Mass",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/philrmass/space-junk/issues"
+  },
+  "homepage": "https://github.com/philrmass/space-junk#readme"
+}
