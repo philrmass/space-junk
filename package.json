@@ -5,7 +5,7 @@
   "homepage": "https://github.com/philrmass/space-junk",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --progress --colors",
+    "start": "webpack-dev-server",
     "build": "webpack --mode production",
     "test": "mocha",
     "lint": "eslint src/** src/**/**",
