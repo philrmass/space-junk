@@ -1,13 +1,13 @@
 function main() {
-  //document.write('space junk');
-  console.log(document);
   setTimeout(() => {
-    //document.write(' ____');
     const canvas = document.getElementById('canvas');
-    console.log('C', canvas);
-    const app = document.getElementById('app');
-    console.log('A', app);
-  }, 2000);
+    canvas.width = 400;
+    canvas.height = 400;
+    const gl = canvas.getContext('webgl');
+    gl.clearColor(1.0, 0.5, 0.0, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    console.log('CANVAS', canvas, gl);
+  }, 100);
 }
 
 window.onload = main;

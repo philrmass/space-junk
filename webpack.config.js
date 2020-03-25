@@ -8,7 +8,7 @@ module.exports = {
   devServer: {
     contentBase: './dist',
     clientLogLevel: 'silent',
-    port: 3000,
+    port: 4000,
     hot: true,
   },
   devtool: 'source-map',
