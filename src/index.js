@@ -1,38 +1,26 @@
+import { initCanvas, drawCanvas } from './canvas';
+import { initBackground, drawBackground } from './background';
+
 function main() {
   console.log('SPACE JUNK');
-  let state = getDefaultState();
+  let state = initState();
 
   function update(timestamp) {
     state = updateState(state);
-    drawBackground(state);
+    draw(state);
     window.requestAnimationFrame(update);
   }
   window.requestAnimationFrame(update);
 }
 
-function initializeCanvas() {
-  const canvas = document.getElementById('canvas');
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-
-  return canvas;
-}
-
-function getDefaultState() {
-  const canvas = initializeCanvas();
-  const gl = canvas.getContext('webgl');
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+function initState() {
+  const { canvas, gl } = initCanvas();
+  const background = initBackground();
 
   return {
     canvas,
     gl,
-    background: {
-      width,
-      height,
-      color: [0.5, 1.0, 0.0],
-    },
+    background,
   };
 }
 
@@ -56,15 +44,12 @@ function updateState(state) {
   }
 }
 
-function drawBackground(state) {
-  state.canvas.width = state.background.width;
-  state.canvas.height = state.background.height;
-  state.gl.clearColor(...state.background.color, 1.0);
-  state.gl.clear(state.gl.COLOR_BUFFER_BIT);
+function draw(state) {
+  drawCanvas(state);
+  drawBackground(state);
 }
 
 window.onload = main;
-
 /*
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
