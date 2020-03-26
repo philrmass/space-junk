@@ -1,13 +1,66 @@
 function main() {
-  setTimeout(() => {
-    const canvas = document.getElementById('canvas');
-    canvas.width = 400;
-    canvas.height = 400;
-    const gl = canvas.getContext('webgl');
-    gl.clearColor(1.0, 0.5, 0.0, 1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    console.log('CANVAS', canvas, gl);
-  }, 100);
+  console.log('SPACE JUNK');
+  let state = getDefaultState();
+
+  function update(timestamp) {
+    state = updateState(state);
+    drawBackground(state);
+    window.requestAnimationFrame(update);
+  }
+  window.requestAnimationFrame(update);
+}
+
+function initializeCanvas() {
+  const canvas = document.getElementById('canvas');
+  canvas.style.position = 'absolute';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+
+  return canvas;
+}
+
+function getDefaultState() {
+  const canvas = initializeCanvas();
+  const gl = canvas.getContext('webgl');
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  return {
+    canvas,
+    gl,
+    background: {
+      width,
+      height,
+      color: [0.5, 1.0, 0.0],
+    },
+  };
+}
+
+function updateState(state) {
+  const inc = 0.001;
+  let red = state.background.color[0] + inc;
+  red = red > 1.0 ? red - 1.0 : red;
+  const color = [red, ...state.background.color.slice(1)];
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const background = {
+    ...state.background,
+    color,
+    width,
+    height,
+  }
+
+  return {
+    ...state,
+    background,
+  }
+}
+
+function drawBackground(state) {
+  state.canvas.width = state.background.width;
+  state.canvas.height = state.background.height;
+  state.gl.clearColor(...state.background.color, 1.0);
+  state.gl.clear(state.gl.COLOR_BUFFER_BIT);
 }
 
 window.onload = main;
@@ -260,10 +313,4 @@ function Graph({ colors }) {
     </section>
   );
 }
-
-Graph.propTypes = {
-  colors: PropTypes.object.isRequired,
-};
-
-export default Graph;
 */
