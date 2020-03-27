@@ -1,15 +1,15 @@
 export function initCanvas() {
   const canvas = document.getElementById('canvas');
-  const gl = canvas.getContext('webgl');
 
   canvas.style.position = 'absolute';
   canvas.style.top = '0';
   canvas.style.left = '0';
 
-  return {
-    canvas,
-    gl,
-  }
+  return canvas;
+}
+
+export function updateCanvas({ canvas }) {
+  return canvas;
 }
 
 export function drawCanvas({ canvas, background }) {
