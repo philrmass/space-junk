@@ -15,9 +15,14 @@ export function updateBackground({ background }) {
 
   const now = Date.now();
   let color = background.color;
-  color = incrementColor(Boolean(now & 16), color, 0, 0.01);
-  color = incrementColor(Boolean(now & 8), color, 1, 0.01);
-  color = incrementColor(Boolean(now & 4), color, 2, 0.01);
+  const inc = 0.001;
+  const r = (now & 16) ? 1 : 0;
+  const g = (now & 8) ? 1 : 0;
+  const b = (now & 4) ? 1 : 0;
+  const total = r + g + b + 0.00000000000001;
+  color = incrementColor(color, 0, inc * (r / total));
+  color = incrementColor(color, 1, inc * (g / total));
+  color = incrementColor(color, 2, inc * (b / total));
 
   return {
     width,
@@ -26,16 +31,22 @@ export function updateBackground({ background }) {
   };
 }
 
-function incrementColor(isInc, color, index, amt) {
-  const inc = isInc ? amt : -amt;
-  let component = color[index] + inc;
-  component = Math.max(0, component);
-  component = Math.min(1, component);
+function incrementColor(color, index, amt) {
+  let component = color[index] + amt;
+  if (component < 0) {
+    component += 1;
+  }
+  if (component > 1) {
+    component -= 1;
+  }
   return [...color.slice(0, index), component, ...color.slice(index + 1)];
 }
 
 export function drawBackground({ gl, background }) {
   gl.clearColor(...background.color, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  //gl.clearDepth(1.0);
+  //gl.depthFunc(gl.LEQUAL);
+  //gl.enable(gl.DEPTH_TEST);
+  gl.clear(gl.COLOR_BUFFER_BIT); //| gl.DEPTH_BUFFER_BIT);
 }
 

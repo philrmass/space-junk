@@ -16,7 +16,7 @@ function main() {
 
 function initState() {
   const canvas = initCanvas();
-  const gl = canvas.getContext('webgl');
+  const gl = canvas.getContext('webgl2');
   const background = initBackground();
   const characters = initCharacters(gl);
 
