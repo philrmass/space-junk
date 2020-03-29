@@ -9,9 +9,9 @@ export function initBackground() {
   };
 }
 
-export function updateBackground({ background }) {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+export function updateBackground({ gl, background }) {
+  const width = gl.canvas.width;
+  const height = gl.canvas.height;
 
   const now = Date.now();
   let color = background.color;
