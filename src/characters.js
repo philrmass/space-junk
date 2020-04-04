@@ -39,36 +39,15 @@ export function updateCharacters({ characters, background }) {
   };
 }
 
-export function drawCharacters({ gl, characters, background }) {
+export function drawCharacters({ gl, characters }) {
   const { program, square } = characters;
   const attribs = {
     position: gl.getAttribLocation(program, 'pos0'),
     color: gl.getAttribLocation(program, 'col0'),
   };
-  const uniforms = {
-    projection: gl.getUniformLocation(program, 'projection'),
-    modelView: gl.getUniformLocation(program, 'modelView'),
-  };
 
   const bufs = initBuffers(gl, square);
 
-  //const fov = 20 * Math.PI / 180;
-  //const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-  //const near = 0.1;
-  //const far = 100.0;
-  const projection = mat4.create();
-  const modelView = mat4.create();
-  //mat4.perspective(projection, fov, aspect, near, far);
-  //mat4.translate(modelView, modelView, [0, 0, -6]);
-  //mat4.rotate(modelView, modelView, rotation.x, [1, 0, 0]);
-  //mat4.rotate(modelView, modelView, rotation.y, [0, 1, 0]);
-  //??? change to more efficient fromRotationTranslationScale(out, q, v, s)
-  const scaleX = 2 / background.width;
-  const scaleY = 2 / background.height;
-  const translatex = -background.width / 2;
-  const translateY = -background.height / 2;
-  mat4.scale(modelView, modelView, [scaleX, scaleY, 1]);
-  mat4.translate(modelView, modelView, [translatex, translateY, 0]);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, bufs.positions);
   gl.vertexAttribPointer(attribs.position, bufs.positionComponents, gl.FLOAT, false, 0, 0);
@@ -78,15 +57,7 @@ export function drawCharacters({ gl, characters, background }) {
   gl.vertexAttribPointer(attribs.color, bufs.colorComponents, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(attribs.color);
 
-  gl.useProgram(program);
-  gl.uniformMatrix4fv(uniforms.projection, false, projection);
-  gl.uniformMatrix4fv(uniforms.modelView, false, modelView);
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-  gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, bufs.positionCount);
+  return bufs;
 }
 
 function initBuffers(gl, square) {
