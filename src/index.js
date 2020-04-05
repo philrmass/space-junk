@@ -54,17 +54,21 @@ function draw(state) {
   gl.bindVertexArray(vao);
 
   drawBackground(state, vao);
+
+  //??? do for each data set
   const set = drawCharacters(state, vao);
   bindVerticesToProgram(gl, set, color);
 
   const matrices = initMatrices(state);
+
+  //??? select program from object data
   gl.useProgram(color); // select per vertex set
   bindMatricesToProgram(gl, matrices, color);
 
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
   gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, set.positionCount);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, set.position.count);
 }
 
 //??? move to vertices utility
@@ -72,12 +76,12 @@ function bindVerticesToProgram(gl, set, program) {
   const positionLoc = gl.getAttribLocation(program, 'pos0');
   const colorLoc = gl.getAttribLocation(program, 'col0');
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, set.positions);
-  gl.vertexAttribPointer(positionLoc, set.positionComponents, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, set.position.buf);
+  gl.vertexAttribPointer(positionLoc, set.position.size, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(positionLoc);
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, set.colors);
-  gl.vertexAttribPointer(colorLoc, set.colorComponents, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, set.color.buf);
+  gl.vertexAttribPointer(colorLoc, set.color.size, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(colorLoc);
 }
 

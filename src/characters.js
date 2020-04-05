@@ -31,21 +31,64 @@ export function updateCharacters({ characters, background }) {
 export function drawCharacters({ gl, characters }) {
   const { square } = characters;
 
-  //??? data = initObjectData(square);
-  //??? data: { position: { size, data }};
-  const positionComponents = 2;
-  const { x, y, width, height } = square;
-  const x1 = x + width;
-  const y1 = y + height;
+  const data = initObjectData(square);
+
+  return bindDataToVertices(gl, data);
+}
+
+//??? move to vertices utilities
+function bindDataToVertices(gl, data) {
+  const bufs = {};
+
+  if (data.position) {
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.position.data), gl.STATIC_DRAW);
+    const count = data.position.data.length / data.position.size;
+
+    bufs.position = {
+      buf,
+      count,
+    };
+  }
+
+  if (data.color) {
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.color.data), gl.STATIC_DRAW);
+    const count = data.color.data.length / data.color.size;
+
+    bufs.color = {
+      buf,
+      count,
+    };
+  }
+
+  return {
+    position: {
+      ...data.position,
+      ...bufs.position,
+    },
+    color: {
+      ...data.color,
+      ...bufs.color,
+    },
+  };
+}
+
+//??? move to object or data utilities
+export function initObjectData(object) {
+  const { x, y, width, height } = object;
+
+  const positionSize = 2;
   const positionData = [
     x, y,
-    x1, y,
-    x, y1,
-    x1, y1,
+    x + width, y,
+    x, y + height,
+    x + width, y + height,
   ];
 
-  //??? data: { color: { size, data }};
-  const colorComponents = 4;
+  const colorSize = 4;
   const colorData = [
     1.0, 0.0, 0.0, 0.0,
     1.0, 0.5, 0.0, 0.8,
@@ -53,23 +96,15 @@ export function drawCharacters({ gl, characters }) {
     0.5, 1.0, 0.0, 0.8,
   ];
 
-  //??? set = bindDataToVertices();
-  //?? vertices { position { buf, size, count } };
-  const positions = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, positions);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positionData), gl.STATIC_DRAW);
-
-  //?? vertices { position { buf, size, count } };
-  const colors = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, colors);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW);
-
+  //??? add program name
   return {
-    positions,
-    positionComponents,
-    positionCount: positionData.length / positionComponents,
-    colors,
-    colorComponents,
-    colorCount: colorData.length / colorComponents,
+    position: {
+      size: positionSize,
+      data: positionData,
+    },
+    color: {
+      size: colorSize,
+      data: colorData,
+    },
   };
 }
