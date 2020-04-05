@@ -1,4 +1,4 @@
-export function initProgram(gl, vsSource, fsSource) {
+export function initProgram(gl, name, vsSource, fsSource) {
   const vs = gl.createShader(gl.VERTEX_SHADER);
   const fs = gl.createShader(gl.FRAGMENT_SHADER);
   gl.shaderSource(vs, vsSource);
@@ -11,7 +11,7 @@ export function initProgram(gl, vsSource, fsSource) {
   gl.attachShader(prog, vs);
   gl.attachShader(prog, fs);
 
-  return { prog, vs, fs };
+  return { name, prog, vs, fs };
 }
 
 export function compilePrograms(gl, defs) {
@@ -37,7 +37,7 @@ export function compilePrograms(gl, defs) {
     gl.deleteShader(fs);
   }
 
-  return defs.map(({ prog }) => prog);
+  return defs.map(({ name, prog }) => ({ [name]: prog }));
 }
 
 function compileShader(gl, shader) {

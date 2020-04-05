@@ -1,29 +1,19 @@
-import { mat4 } from 'gl-matrix';
-
-import { initProgram, compilePrograms } from './utilities/shaders';
-import { colorVs, colorFs } from './data/shaders/color';
-
-export function initCharacters(gl) {
-  const x = 0;
-  const y = 200;
-  const width = 100;
-  const height = 100;
-  const def = initProgram(gl, colorVs, colorFs);
-  const [program] = compilePrograms(gl, [def]);
+export function initCharacters() {
+  const square = {
+    x: 0,
+    y: 200,
+    width: 100,
+    height: 100,
+  };
 
   return {
-    program,
-    square: {
-      x,
-      y,
-      width,
-      height,
-    },
+    square,
   };
 }
 
 export function updateCharacters({ characters, background }) {
-  const { program, square } = characters;
+  const { square } = characters;
+
   square.x = square.x + 1;
   square.y = square.y + 1;
   if (square.x > background.width) {
@@ -34,33 +24,15 @@ export function updateCharacters({ characters, background }) {
   }
 
   return {
-    program,
     square,
   };
 }
 
 export function drawCharacters({ gl, characters }) {
-  const { program, square } = characters;
-  const attribs = {
-    position: gl.getAttribLocation(program, 'pos0'),
-    color: gl.getAttribLocation(program, 'col0'),
-  };
+  const { square } = characters;
 
-  const bufs = initBuffers(gl, square);
-
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, bufs.positions);
-  gl.vertexAttribPointer(attribs.position, bufs.positionComponents, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(attribs.position);
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, bufs.colors);
-  gl.vertexAttribPointer(attribs.color, bufs.colorComponents, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(attribs.color);
-
-  return bufs;
-}
-
-function initBuffers(gl, square) {
+  //??? data = initObjectData(square);
+  //??? data: { position: { size, data }};
   const positionComponents = 2;
   const { x, y, width, height } = square;
   const x1 = x + width;
@@ -72,6 +44,7 @@ function initBuffers(gl, square) {
     x1, y1,
   ];
 
+  //??? data: { color: { size, data }};
   const colorComponents = 4;
   const colorData = [
     1.0, 0.0, 0.0, 0.0,
@@ -80,10 +53,13 @@ function initBuffers(gl, square) {
     0.5, 1.0, 0.0, 0.8,
   ];
 
+  //??? set = bindDataToVertices();
+  //?? vertices { position { buf, size, count } };
   const positions = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positions);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positionData), gl.STATIC_DRAW);
 
+  //?? vertices { position { buf, size, count } };
   const colors = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, colors);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW);
