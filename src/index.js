@@ -1,5 +1,6 @@
 import { initGl, updateGl } from './gl';
-import { mat4 } from 'gl-matrix';
+import { initMatrices, bindMatricesToProgram } from './utilities/matrices';
+import { bindVerticesToProgram } from './utilities/vertices';
 import { initBackground, updateBackground, drawBackground } from './background';
 import { initCharacters, updateCharacters, drawCharacters } from './characters';
 import { initPrograms } from './programs';
@@ -48,67 +49,28 @@ function updateState(state, dt) { //eslint-disable-line no-unused-vars
 }
 
 function draw(state) {
-  const { gl, programs: { color }} = state;
+  const { gl, programs } = state;
 
   const vao = gl.createVertexArray();
   gl.bindVertexArray(vao);
 
   drawBackground(state, vao);
 
-  //??? do for each data set
+  //??? for each data set
   const set = drawCharacters(state, vao);
-  bindVerticesToProgram(gl, set, color);
+  const program = programs[set.program];
+  bindVerticesToProgram(gl, set, program);
 
-  const matrices = initMatrices(state);
+  const matrices = initMatrices(state.background);
 
   //??? select program from object data
-  gl.useProgram(color); // select per vertex set
-  bindMatricesToProgram(gl, matrices, color);
+  gl.useProgram(program); // select per vertex set
+  bindMatricesToProgram(gl, matrices, program);
 
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
   gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, set.position.count);
-}
-
-//??? move to vertices utility
-function bindVerticesToProgram(gl, set, program) {
-  const positionLoc = gl.getAttribLocation(program, 'pos0');
-  const colorLoc = gl.getAttribLocation(program, 'col0');
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, set.position.buf);
-  gl.vertexAttribPointer(positionLoc, set.position.size, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(positionLoc);
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, set.color.buf);
-  gl.vertexAttribPointer(colorLoc, set.color.size, gl.FLOAT, false, 0, 0);
-  gl.enableVertexAttribArray(colorLoc);
-}
-
-//??? move to matrices utility
-function initMatrices({ background }) {
-  const modelview = mat4.create();
-  const scaleX = 2 / background.width;
-  const scaleY = 2 / background.height;
-  mat4.scale(modelview, modelview, [scaleX, scaleY, 1]);
-
-  const projection = mat4.create();
-  const translatex = -background.width / 2;
-  const translateY = -background.height / 2;
-  mat4.translate(modelview, modelview, [translatex, translateY, 0]);
-
-  return { modelview, projection };
-}
-
-//??? move to matrices utility
-function bindMatricesToProgram(gl, matrices, program) {
-  const { modelview, projection } = matrices;
-
-  const modelviewLoc = gl.getUniformLocation(program, 'modelview');
-  const projectionLoc = gl.getUniformLocation(program, 'projection');
-
-  gl.uniformMatrix4fv(modelviewLoc, false, modelview);
-  gl.uniformMatrix4fv(projectionLoc, false, projection);
 }
 
 window.onload = main;
