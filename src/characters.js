@@ -35,7 +35,9 @@ export function updateCharacters({ characters, background }) {
 export function drawCharacters({ gl, characters }) {
   const { square } = characters;
 
-  const data = initObjectData(square);
+  const all = [square];
+  const datas = all.map((character) => initObjectData(character));
+  const sets = datas.map((data) => bindDataToVertices(gl, data));
 
-  return bindDataToVertices(gl, data);
+  return sets;
 }

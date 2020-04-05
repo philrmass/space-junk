@@ -1,4 +1,5 @@
 # Tasks
+- Add textures for objects
 - Add keyboard input
 - Use dt in update motion
 - Update use of VAO

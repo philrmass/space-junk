@@ -56,21 +56,20 @@ function draw(state) {
 
   drawBackground(state, vao);
 
-  //??? for each data set
-  const set = drawCharacters(state, vao);
-  const program = programs[set.program];
-  bindVerticesToProgram(gl, set, program);
+  const sets = drawCharacters(state, vao);
+  for (const set of sets) {
+    const matrices = initMatrices(state.background);
+    const program = programs[set.program];
 
-  const matrices = initMatrices(state.background);
+    gl.useProgram(program);
+    bindMatricesToProgram(gl, matrices, program);
+    bindVerticesToProgram(gl, set, program);
 
-  //??? select program from object data
-  gl.useProgram(program); // select per vertex set
-  bindMatricesToProgram(gl, matrices, program);
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-  gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, set.position.count);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.viewport(0.0, 0.0, gl.canvas.clientWidth, gl.canvas.clientHeight);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, set.position.count);
+  }
 }
 
 window.onload = main;
