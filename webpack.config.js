@@ -5,6 +5,16 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader',
+        ],
+      },
+    ],
+  },
   devServer: {
     contentBase: './dist',
     clientLogLevel: 'silent',

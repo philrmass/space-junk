@@ -17,6 +17,14 @@ export function initObjectData(object) {
     0.5, 1.0, 0.0, 0.8,
   ];
 
+  const coordSize = 2;
+  const coordData = [
+    0.0, 0.0,
+    1.0, 0.0,
+    0.0, 1.0,
+    1.0, 1.0,
+  ];
+
   return {
     position: {
       size: positionSize,
@@ -25,6 +33,10 @@ export function initObjectData(object) {
     color: {
       size: colorSize,
       data: colorData,
+    },
+    coord: {
+      size: coordSize,
+      data: coordData,
     },
     program: object.program,
   };

@@ -7,7 +7,7 @@ export function initCharacters() {
     y: 200,
     width: 100,
     height: 100,
-    program: 'color',
+    program: 'texture',
   };
 
   return {
