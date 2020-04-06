@@ -1,3 +1,11 @@
+export const textureParams = {
+  positionName: 'pos0',
+  coordName: 'crd0',
+  modelviewName: 'modelview',
+  projectionName: 'projection',
+  samplerName: 'sampler0',
+};
+
 export const textureVs = `
 attribute vec4 pos0;
 attribute vec2 crd0;
@@ -13,9 +21,9 @@ void main() {
 
 export const textureFs = `
 varying mediump vec2 vfCrd0;
-uniform sampler2D samp0;
+uniform sampler2D sampler0;
 
 void main() {
-  gl_FragColor = texture2D(samp0, vfCrd0);
+  gl_FragColor = texture2D(sampler0, vfCrd0);
 }
 `;

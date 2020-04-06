@@ -38,6 +38,7 @@ export function initObjectData(object) {
       size: coordSize,
       data: coordData,
     },
+    texture: object.texture,
     program: object.program,
   };
 }

@@ -1,3 +1,10 @@
+export const textureParams = {
+  positionName: 'pos0',
+  colorName: 'col0',
+  modelviewName: 'modelview',
+  projectionName: 'projection',
+};
+
 export const colorVs = `
 attribute vec4 pos0;
 attribute vec4 col0;

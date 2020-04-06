@@ -1,5 +1,7 @@
 # Tasks
-- Add textures for objects
+- Use params in program definitions
+- Use param names for loading: pos, col, crd, mv, proj, sampler
+
 - Add keyboard input
 - Use dt in update motion
 - Update use of VAO

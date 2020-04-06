@@ -8,6 +8,7 @@ export function initCharacters() {
     width: 100,
     height: 100,
     program: 'texture',
+    texture: 'mario',
   };
 
   return {

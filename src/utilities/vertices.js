@@ -74,6 +74,7 @@ export function bindDataToVertices(gl, data) {
       ...data.coord,
       ...bufs.coord,
     },
+    texture: data.texture,
     program: data.program,
   };
 }
