@@ -9,9 +9,10 @@ module.exports = {
     rules: [
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader?outputPath=./data/textures/',
-        ],
+        loader: 'file-loader',
+        options: {
+          publicPath: 'space-junk',
+        },
       },
     ],
   },
