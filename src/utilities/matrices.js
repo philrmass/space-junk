@@ -17,8 +17,8 @@ export function initMatrices({ width, height }) {
 export function bindMatricesToProgram(gl, matrices, program) {
   const { modelview, projection } = matrices;
 
-  const modelviewLoc = gl.getUniformLocation(program, 'modelview');
-  const projectionLoc = gl.getUniformLocation(program, 'projection');
+  const modelviewLoc = gl.getUniformLocation(program, program.modelviewName);
+  const projectionLoc = gl.getUniformLocation(program, program.projectionName);
 
   gl.uniformMatrix4fv(modelviewLoc, false, modelview);
   gl.uniformMatrix4fv(projectionLoc, false, projection);

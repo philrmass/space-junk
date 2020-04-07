@@ -1,4 +1,4 @@
-export function initProgram(gl, name, vsSource, fsSource) {
+export function initProgram(gl, name, vsSource, fsSource, params) {
   const vs = gl.createShader(gl.VERTEX_SHADER);
   const fs = gl.createShader(gl.FRAGMENT_SHADER);
   gl.shaderSource(vs, vsSource);
@@ -11,7 +11,7 @@ export function initProgram(gl, name, vsSource, fsSource) {
   gl.attachShader(prog, vs);
   gl.attachShader(prog, fs);
 
-  return { name, prog, vs, fs };
+  return { name, prog, vs, fs, ...params };
 }
 
 export function compilePrograms(gl, defs) {
@@ -30,6 +30,16 @@ export function compilePrograms(gl, defs) {
       console.error(`  vs log: ${gl.getShaderInfoLog(vs)}`); // eslint-disable-line no-console
       console.error(`  fs log: ${gl.getShaderInfoLog(fs)}`); // eslint-disable-line no-console
     }
+  }
+
+  for (const def of defs) {
+    def.prog.positionName = def.positionName;
+    def.prog.colorName = def.colorName;
+    def.prog.coordName = def.coordName;
+    def.prog.coordName = def.coordName;
+    def.prog.modelviewName = def.modelviewName;
+    def.prog.projectionName = def.projectionName;
+    def.prog.samplerName = def.samplerName;
   }
 
   for (const { vs, fs } of defs) {

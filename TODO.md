@@ -1,12 +1,10 @@
 # Tasks
-- Use params in program definitions
-- Use param names for loading: pos, col, crd, mv, proj, sampler
-
 - Add keyboard input
 - Use dt in update motion
 - Update use of VAO
 - Move background.js, character.js, etc into 'src/objects'
 
+- Fix deployed image paths
 - Add depth buffer (character plane, background foreground, etc)
 - Add sound effects
 - Add performance timers

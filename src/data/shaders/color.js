@@ -1,4 +1,4 @@
-export const textureParams = {
+export const colorParams = {
   positionName: 'pos0',
   colorName: 'col0',
   modelviewName: 'modelview',

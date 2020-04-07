@@ -66,8 +66,7 @@ function draw(state) {
     const matrices = initMatrices(state.background);
     const texture = textures[set.texture];
     const program = programs[set.program];
-    //??? get sampler by name from program
-    const sampler = gl.getUniformLocation(program, 'sampler0');
+    const sampler = gl.getUniformLocation(program, program.samplerName);
 
     gl.useProgram(program);
     bindMatricesToProgram(gl, matrices, program);

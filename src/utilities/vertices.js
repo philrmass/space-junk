@@ -1,7 +1,7 @@
 export function bindVerticesToProgram(gl, set, program) {
-  const positionLoc = gl.getAttribLocation(program, 'pos0');
-  const colorLoc = gl.getAttribLocation(program, 'col0');
-  const coordLoc = gl.getAttribLocation(program, 'crd0');
+  const positionLoc = gl.getAttribLocation(program, program.positionName);
+  const colorLoc = gl.getAttribLocation(program, program.colorName);
+  const coordLoc = gl.getAttribLocation(program, program.coordName);
 
   if (positionLoc >= 0) {
     gl.bindBuffer(gl.ARRAY_BUFFER, set.position.buf);
