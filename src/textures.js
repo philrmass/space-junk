@@ -1,4 +1,4 @@
-import mario from './mario.png';
+import mario from './data/textures/mario.png';
 import faces from './data/textures/characters.png';
 import { loadTexture } from './utilities/textures';
 
