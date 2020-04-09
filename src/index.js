@@ -3,18 +3,17 @@ import { initMatrices, bindMatricesToProgram } from './utilities/matrices';
 import { bindVerticesToProgram } from './utilities/vertices';
 import { initBackground, updateBackground, drawBackground } from './background';
 import { initCharacters, updateCharacters, drawCharacters } from './characters';
+import { initInput } from './input';
 import { initPrograms } from './programs';
 import { initTextures } from './textures';
 
 function main() {
   let state = initState();
-  let lastTimestamp = 0;
+  const updateInput = initInput();
 
   function update(timestamp) {
-    const dt = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
-
-    state = updateState(state, dt);
+    const input = updateInput(timestamp);
+    state = updateState(state, input);
     draw(state);
     window.requestAnimationFrame(update);
   }
@@ -37,12 +36,12 @@ function initState() {
   };
 }
 
-function updateState(state, dt) { //eslint-disable-line no-unused-vars
+function updateState(state, input) { //eslint-disable-line no-unused-vars
   const gl = updateGl(state);
   const textures = state.textures;
   const programs = state.programs;
-  const background = updateBackground(state);
-  const characters = updateCharacters(state);
+  const background = updateBackground(state, input);
+  const characters = updateCharacters(state, input);
 
   return {
     gl,

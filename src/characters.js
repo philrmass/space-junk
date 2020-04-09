@@ -16,16 +16,26 @@ export function initCharacters() {
   };
 }
 
-export function updateCharacters({ characters, background }) {
+export function updateCharacters(
+  { characters, background },
+  { hasFocus, keys },
+) {
   const { square } = characters;
 
-  square.x = square.x + 1;
-  square.y = square.y + 1;
-  if (square.x > background.width) {
-    square.x -= background.width;
+  if (keys.length > 0) {
+    console.log('KEYS:', keys);
   }
-  if (square.y > background.height) {
-    square.y -= background.height;
+
+  if (hasFocus) {
+    square.x = square.x + 1;
+    square.y = square.y + 1;
+
+    if (square.x > background.width) {
+      square.x -= background.width;
+    }
+    if (square.y > background.height) {
+      square.y -= background.height;
+    }
   }
 
   return {
