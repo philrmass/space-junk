@@ -27,8 +27,8 @@ export function updateCharacters(
   }
 
   if (hasFocus) {
-    square.x = square.x + 1;
-    square.y = square.y + 1;
+    square.x = square.x + 10;
+    square.y = square.y + 20;
 
     if (square.x > background.width) {
       square.x -= background.width;
