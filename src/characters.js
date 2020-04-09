@@ -1,5 +1,5 @@
 import { bindDataToVertices } from './utilities/vertices';
-import { initObjectData } from './objects';
+import { initObjectData } from './utilities/objects';
 
 export function initCharacters() {
   const square = {

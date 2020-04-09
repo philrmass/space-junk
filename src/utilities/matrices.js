@@ -23,3 +23,15 @@ export function bindMatricesToProgram(gl, matrices, program) {
   gl.uniformMatrix4fv(modelviewLoc, false, modelview);
   gl.uniformMatrix4fv(projectionLoc, false, projection);
 }
+
+/*
+const fov = 20 * Math.PI / 180;
+const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+const near = 0.1;
+const far = 100.0;
+
+mat4.perspective(projection, fov, aspect, near, far);
+mat4.translate(modelView, modelView, [0, 0, -6]);
+mat4.rotate(modelView, modelView, rotation.x, [1, 0, 0]);
+mat4.rotate(modelView, modelView, rotation.y, [0, 1, 0]);
+*/
