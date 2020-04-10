@@ -16,12 +16,15 @@ export function updateSpaceJunk(
   const { spaceJunk } = characters;
 
   if (keys.length > 0) {
-    console.log('KEYS:', keys);
+    console.log(`KEYS: [${keys}]`);
   }
 
   if (hasFocus) {
-    spaceJunk.x = spaceJunk.x + 1;
-    spaceJunk.y = spaceJunk.y + 2;
+    if (keys.length > 0) {
+      if (keys[0] === 'ArrowRight') {
+        spaceJunk.x = spaceJunk.x + 5;
+      }
+    }
 
     if (spaceJunk.x > background.width) {
       spaceJunk.x -= background.width;

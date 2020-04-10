@@ -27,8 +27,8 @@ export function updateCharacters(state, input) {
   const spaceJunk = updateSpaceJunk(state, input);
 
   if (hasFocus) {
-    square.x = square.x + 10;
-    square.y = square.y + 20;
+    square.x = square.x + 5;
+    square.y = square.y + 5;
 
     if (square.x > background.width) {
       square.x -= background.width;
