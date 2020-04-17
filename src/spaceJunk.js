@@ -23,6 +23,12 @@ export function updateSpaceJunk(
     if (keys.length > 0) {
       if (keys[0] === 'ArrowRight') {
         spaceJunk.x = spaceJunk.x + 5;
+      } else if (keys[0] === 'ArrowLeft') {
+        spaceJunk.x = spaceJunk.x - 5;
+      } else if (keys[0] === 'ArrowUp') {
+        spaceJunk.y = spaceJunk.y + 5;
+      } else if (keys[0] === 'ArrowDown') {
+        spaceJunk.y = spaceJunk.y - 5;
       }
     }
 
