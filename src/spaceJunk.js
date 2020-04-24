@@ -5,7 +5,7 @@ export function initSpaceJunk() {
     width: 50,
     height: 150,
     program: 'texture',
-    texture: 'mario',
+    texture: 'spaceJunk',
   };
 }
 
