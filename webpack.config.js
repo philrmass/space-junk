@@ -1,10 +1,8 @@
+const path = require('path');
+
 module.exports = {
   entry: './src/index.js',
-  output: {
-    path: __dirname + '/dist',
-    publicPath: '/',
-    filename: 'bundle.js',
-  },
+  mode: 'none',
   module: {
     rules: [
       {
@@ -15,13 +13,41 @@ module.exports = {
           outputPath: 'space-junk',
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
+        ],
+        include: /\.module\.css$/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+        exclude: /\.module\.css$/,
+      },
     ],
   },
-  devServer: {
-    contentBase: './dist',
-    clientLogLevel: 'silent',
-    port: 4000,
-    hot: true,
+  resolve: {
+    extensions: ['*', '.js'],
   },
-  devtool: 'source-map',
+  output: {
+    path: path.join(__dirname, '/dist'),
+    publicPath: '/',
+    filename: 'bundle.js',
+  },
+  devServer: {
+    port: 4000,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+  },
+  infrastructureLogging: {
+    level: 'error',
+  },
 };
